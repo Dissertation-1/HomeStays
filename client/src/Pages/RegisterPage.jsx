@@ -75,7 +75,7 @@ const RegisterPage = () => {
               className="w-full border py-2 px-3 my-2 rounded-2xl border-gray-300"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              pattern="^(?=.[a-z])(?=.[A-Z])(?=.[0-9])(?=.[!@#$%^&*_=+-]).{8,12}$"
+              // pattern="^(?=.[a-z])(?=.[A-Z])(?=.[0-9])(?=.[!@#$%^&*_=+-]).{8,12}$"
               required
             />
             <button className="bg-pink p-2 w-full text-white rounded-2xl mt-1 hover:scale-95 transition-all">
