@@ -2,26 +2,30 @@ import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../Context/userContext";
 import axios from "axios";
 import { toast } from "react-toastify";
-export default function App({ placeId, avgrating }) {
+export default function App({ place }) {
   const { user } = useContext(UserContext);
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
+  const [avgRating, setAvgRating] = useState(null)
+  // console.log(placeId._id)
   useEffect(() => {
-    avgrating(placeId._id)
-    fetchdata(user, placeId)
+    async function avgrating() {
+      await axios.get(`http://localhost:4000/rating/avgrating/${place._id}`)
+      .then(res => setAvgRating(res.data.avgRating))
+    }
+    avgrating()
+    fetchdata(user, place)
 
   }, [rating]);
 
   const fetchdata = async (user,placeId) => {
     if(user){
-      
       const res = await axios.post("http://localhost:4000/rating/userrated", {
       user: user.id,
       bookedPlaces: placeId._id,
     });
     if(res.data){
       setRating(res.data.rating)
-
     }
     }
     
@@ -33,7 +37,7 @@ export default function App({ placeId, avgrating }) {
       .post("http://localhost:4000/rating/userrating", {
         rating: currentRating,
         user: user.id,
-        bookedPlaces: placeId._id,
+        bookedPlaces: place._id,
       })
       .then((res) => {
         // window.location.reload()
@@ -48,6 +52,7 @@ export default function App({ placeId, avgrating }) {
 
   return (
     <div>
+      <p>Avg Rating: {avgRating}</p>
       {[...Array(5)].map((star, index) => {
         const currentRating = index + 1;
 
@@ -60,7 +65,7 @@ export default function App({ placeId, avgrating }) {
               value={currentRating}
               onChange={() => handleRating(currentRating)}
               className={`hidden`}
-              disabled={rating === null}
+              disabled={user === null}
             />
             <span
               className="cursor-pointer mr-[5px] text-3xl"

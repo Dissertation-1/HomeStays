@@ -8,7 +8,7 @@ const { ObjectId } = require("mongodb");
 router.post("/userrating", isLoggedIn, async (req, res) => {
   try {
     const { rating, user, bookedPlaces } = req.body;
-    // console.log(req.body);
+    console.log(req.body);
     const isUserExist = await Rating.findOne({ user, bookedPlaces });
     if (!isUserExist) {
       const newRating = await Rating.create({
@@ -51,6 +51,7 @@ router.get("/avgrating/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const allRating = await Rating.find({ bookedPlaces: id });
+
     const avg = allRating.reduce((total, rating) => {
       return total + rating.rating;
     }, 0);

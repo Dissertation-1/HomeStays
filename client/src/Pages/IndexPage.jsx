@@ -9,19 +9,15 @@ const IndexPage = () => {
   const [allPlaces, setAllPlaces] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchPlace, setSearchPlace] = useState("");
-  const [avgRating, setAvgRating] = useState(null)
   
   useEffect(() => {
     axios.get("http://localhost:4000/places").then(({ data }) => {
       setAllPlaces(data);
       setLoading(false);
     });
+    
   }, []);
 
-  const avgrating = async (id) => {
-    await axios.get(`http://localhost:4000/rating/avgrating/${id}`)
-    .then(res => setAvgRating(res.data.avgRating))
-  }
 
   if (loading) {
     return <Spinner width={200} height={200} />;
@@ -60,6 +56,7 @@ const IndexPage = () => {
       <div className="grid grid-cols-1 justify-items-center py-4 px-6 gap-y-8 sm:grid-cols-2 sm:gap-x-4 md:grid-cols-2 md:gap-x-4 lg:grid-cols-3 lg:gap-x-6 xl:grid-cols-4">
         {allPlaces.length > 0 &&
           filteredPlaces.map((place) => {
+            
             return (
               <div className="w-full max-w-[400px]" key={place._id}>
                 <Link
@@ -89,8 +86,8 @@ const IndexPage = () => {
                   </div>
                   </div>
                   <div className="">
-                    Avg Rating: {avgRating}
-                    <div><Rating placeId = {place} avgrating={avgrating} /></div>
+                    
+                    <div><Rating place={place} /></div>
                   </div>
                 </div>
               </div>
