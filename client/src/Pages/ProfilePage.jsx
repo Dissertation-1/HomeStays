@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../Context/userContext";
 import { Navigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -14,13 +14,16 @@ const ProfilePage = () => {
   const [redirect, setRedirect] = useState(null);
   const [loading, setLoading] = useState(false);
   const { user, setUser } = useContext(UserContext);
+  
+
 
   let { subpage } = useParams();
   if (subpage === undefined) {
     subpage = "profile";
   }
   
-  if (!user && !redirect) return <Navigate to={"/login"} />;
+  if (!user ) return <Navigate to={"/login"} />;
+
 
   const logout = async () => {
     setLoading(true);
@@ -29,6 +32,7 @@ const ProfilePage = () => {
     setUser(null);
     setLoading(false);
     setRedirect("/");
+    localStorage.removeItem('user')
   };
   if (redirect) return <Navigate to={redirect} />;
 

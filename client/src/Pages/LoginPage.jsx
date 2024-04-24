@@ -21,6 +21,7 @@ const LoginPage = () => {
       setLoading(true);
       const { data } = await axios.post("http://localhost:4000/user/login", { email, password });
       setUser(data);
+      localStorage.setItem('user', JSON.stringify(data));
     } catch (e) {
       if (e.response.status == 422) 
         toast.error("Wrong Password!!");

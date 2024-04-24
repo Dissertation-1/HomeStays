@@ -4,6 +4,7 @@ const userController = require('../controllers/userController');
 const placeController = require('../controllers/placeController');
 const bookingController = require('../controllers/bookingController');
 const OtpController = require('../controllers/otpController')
+const RatingController = require('../controllers/ratingController')
 const Place = require('../models/Place');
 const imageDownload = require('image-downloader');
 const multer = require('multer')
@@ -14,6 +15,7 @@ router.use('/user',userController);
 router.use('/place',placeController);
 router.use('/booking',bookingController);
 router.use('/otp',OtpController);
+router.use('/rating',RatingController);
 
 const photosMiddleware = multer({dest:'/tmp'});
 
