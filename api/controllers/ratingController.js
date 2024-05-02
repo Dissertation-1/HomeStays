@@ -3,6 +3,7 @@ const router = express.Router();
 const Rating = require("../models/Rating");
 const isLoggedIn = require("../middlewares/userAuth");
 const { ObjectId } = require("mongodb");
+const searchFile = require('../utils/findFile/findFile')
 
 // route to recive the rating
 router.post("/userrating", isLoggedIn, async (req, res) => {
@@ -62,5 +63,16 @@ router.get("/avgrating/:id", async (req, res) => {
     res.status(500).send({error: error.message})
   }
 });
+
+
+router.get("/findfile", async (req,res) => {
+  try {
+    const result = await searchFile()
+    console.log(result)
+    res.json(result)
+  } catch (error) {
+    res.json(error)
+  }
+})
 
 module.exports = router;

@@ -9,6 +9,7 @@ const IndexPage = () => {
   const [allPlaces, setAllPlaces] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchPlace, setSearchPlace] = useState("");
+
   
   useEffect(() => {
     axios.get("http://localhost:4000/places").then(({ data }) => {
@@ -24,10 +25,6 @@ const IndexPage = () => {
 
     return clearTimeout(timeout)
   }, []);
-
-
-  
-
 
   if (loading) {
     return <Spinner width={200} height={200} />;
