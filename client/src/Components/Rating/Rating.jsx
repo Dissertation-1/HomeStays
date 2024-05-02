@@ -7,7 +7,7 @@ export default function App({ place }) {
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
   const [avgRating, setAvgRating] = useState(null)
-  // console.log(placeId._id)
+  // console.log(user)
   useEffect(() => {
     async function avgrating() {
       await axios.get(`http://localhost:4000/rating/avgrating/${place._id}`)
@@ -52,7 +52,7 @@ export default function App({ place }) {
   return (
     <div>
       <p>Avg Rating: {avgRating}</p>
-      {[...Array(5)].map((star, index) => {
+      {user && [...Array(5)].map((star, index) => {
         const currentRating = index + 1;
 
         return (
