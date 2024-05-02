@@ -7,13 +7,14 @@ const { ObjectId } = require("mongodb");
 // route to recive the rating
 router.post("/userrating", isLoggedIn, async (req, res) => {
   try {
-    const { rating, user, bookedPlaces } = req.body;
+    const user = req.user.email
+    const { rating, bookedPlaces } = req.body;
     console.log(req.body);
     const isUserExist = await Rating.findOne({ user, bookedPlaces });
     if (!isUserExist) {
       const newRating = await Rating.create({
         rating: rating,
-        user: new ObjectId(user),
+        user: user,
         bookedPlaces: new ObjectId(bookedPlaces),
       });
       res
@@ -33,9 +34,10 @@ router.post("/userrating", isLoggedIn, async (req, res) => {
 // route to send the rating for respective user
 router.post("/userrated", isLoggedIn, async (req, res) => {
   try {
-    const { user, bookedPlaces } = req.body;
-
+    const user = req.user.email
+    const { bookedPlaces } = req.body;
     const isPlaceExist = await Rating.findOne({ user, bookedPlaces });
+    console.log(isPlaceExist)
     if (isPlaceExist) {
       res.status(200).json(isPlaceExist);
     } else {

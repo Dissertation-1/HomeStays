@@ -16,7 +16,17 @@ const IndexPage = () => {
       setLoading(false);
     });
     
+    const reloadPage = () => {
+      window.location.reload();
+    };
+
+    const timeout = setTimeout(reloadPage, 5000);
+
+    return clearTimeout(timeout)
   }, []);
+
+
+  
 
 
   if (loading) {

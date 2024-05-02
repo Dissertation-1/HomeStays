@@ -14,14 +14,13 @@ export default function App({ place }) {
       .then(res => setAvgRating(res.data.avgRating))
     }
     avgrating()
-    fetchdata(user, place)
+    fetchdata(place)
 
   }, [rating]);
 
-  const fetchdata = async (user,placeId) => {
+  const fetchdata = async (placeId) => {
     if(user){
       const res = await axios.post("http://localhost:4000/rating/userrated", {
-      user: user.id,
       bookedPlaces: placeId._id,
     });
     if(res.data){
